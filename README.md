@@ -7,13 +7,13 @@ This document provides an overview of the test suite for the JsonDiffPatch libra
 JsonDiffPatch is a library that allows for the diffing and patching of JSON objects.
 
 ```bash
-npm install json-diff-patch
+npm install @usestrict/json-diff-patch
 ```
 
 1. Import JsonDiffPatch in your project:
 
 ```javascript
-import { DiffPatcher } from 'json-diff-patch';
+import { DiffPatcher } from '@usestrict/json-diff-patch';
 ```
 
 2. Create a `DiffPatcher` instance:

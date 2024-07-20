@@ -1,5 +1,5 @@
 {
-  "name": "json-diff-patch",
+  "name": "@usestrict/json-diff-patch",
   "version": "1.1.0",
   "description": "Find Diff in JSON",
   "main": "build/main/index.js",
