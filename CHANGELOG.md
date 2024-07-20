@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/ali-master/json-diff-patch/compare/v1.1.1...v1.1.2) (2024-07-20)
+
+
+### Bug Fixes
+
+* **npm:** add publish access and keywords ([d142bcf](https://github.com/ali-master/json-diff-patch/commit/d142bcf56bff4f1e72fa33ff1cf8fbad9cc3ecec))
+* **npm:** rename package name ([31346da](https://github.com/ali-master/json-diff-patch/commit/31346da8566c43580a5af4ffcb30ab98d7505925))
+
 ### [1.1.1](https://github.com/ali-master/json-diff-patch/compare/v1.1.0...v1.1.1) (2024-07-20)
 
 
