@@ -7,7 +7,14 @@
   "module": "build/module/index.js",
   "repository": "https://github.com/ali-master/json-diff-patch",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "json",
+    "diff",
+    "patch",
+    "json-diff",
+    "json-patch",
+    "json-diff-patch"
+  ],
   "scripts": {
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
@@ -34,7 +41,8 @@
     "preinstall": "npx only-allow pnpm"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=14",
+    "pnpm": ">=9"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.16.1",
@@ -68,5 +76,8 @@
     "LICENSE",
     "README.md"
   ],
-  "packageManager": "pnpm@9.5.0"
+  "packageManager": "pnpm@9.5.0",
+  "publishConfig": {
+    "access": "public"
+  }
 }
