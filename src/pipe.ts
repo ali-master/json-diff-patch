@@ -38,7 +38,7 @@ class Pipe<TContext extends Context<any>> {
   }
 
   log(msg: string) {
-    console.log(`[jsondiffpatch] ${this.name} pipe, ${msg}`);
+    console.log(`[json-diff-patch] ${this.name} pipe, ${msg}`);
   }
 
   append(...args: Filter<TContext>[]) {
