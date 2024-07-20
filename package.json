@@ -22,7 +22,7 @@
     "test:unit": "cross-env CI=true vitest",
     "watch:build": "tsc -p tsconfig.json -w",
     "watch:test": "vitest --watch",
-    "test:ui": "run-s test:watch -- --ui",
+    "watch:test:ui": "run-s test:watch -- --ui",
     "cov:check": "run-s test:unit -- run --coverage",
     "doc": "run-s doc:html && open-cli build/docs/index.html",
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out build/docs",
