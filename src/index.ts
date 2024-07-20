@@ -1,6 +1,6 @@
-import DiffPatcher from './diff-patcher';
-import type { Delta, Options } from './types';
-import type { Context, DiffContext, PatchContext } from './contexts';
+import DiffPatcher from "./diff-patcher";
+import type { Delta, Options } from "./types";
+import type { Context, DiffContext, PatchContext } from "./contexts";
 
 export function create(options?: Options) {
   return new DiffPatcher(options);
@@ -23,5 +23,5 @@ export function patch(left: unknown, delta: Delta) {
 }
 
 export { DiffPatcher };
-export type * from './types';
+export type * from "./types";
 export type { Context, DiffContext, PatchContext };

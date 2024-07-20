@@ -1,11 +1,11 @@
-import { Context } from './context';
+import { Context } from "./context";
 // Types
-import type { Delta } from '../types';
+import type { Delta } from "../types";
 
 export class PatchContext extends Context<unknown> {
   left: unknown;
   delta: Delta;
-  pipe: 'patch';
+  pipe: "patch";
 
   nested?: boolean;
 
@@ -13,6 +13,6 @@ export class PatchContext extends Context<unknown> {
     super();
     this.left = left;
     this.delta = delta;
-    this.pipe = 'patch';
+    this.pipe = "patch";
   }
 }

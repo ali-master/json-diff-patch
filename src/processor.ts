@@ -1,6 +1,6 @@
-import type Pipe from './pipe.js';
-import type { Options } from './types';
-import type { Context, DiffContext, PatchContext } from './contexts';
+import type Pipe from "./pipe.js";
+import type { Options } from "./types";
+import type { Context, DiffContext, PatchContext } from "./contexts";
 
 class Processor {
   selfOptions: Options;
@@ -24,18 +24,13 @@ class Processor {
     return this.selfOptions;
   }
 
-  pipe<TContext extends Context<any>>(
-    name: string | Pipe<TContext>,
-    pipeArg?: Pipe<TContext>,
-  ) {
+  pipe<TContext extends Context<any>>(name: string | Pipe<TContext>, pipeArg?: Pipe<TContext>) {
     let pipe = pipeArg;
-    if (typeof name === 'string') {
-      if (typeof pipe === 'undefined') {
+    if (typeof name === "string") {
+      if (typeof pipe === "undefined") {
         return this.pipes[name as keyof typeof this.pipes]!;
       } else {
-        this.pipes[name as keyof typeof this.pipes] = pipe as Pipe<
-          Context<any>
-        >;
+        this.pipes[name as keyof typeof this.pipes] = pipe as Pipe<Context<any>>;
       }
     }
     if (name && (name as Pipe<TContext>).name) {
@@ -43,9 +38,7 @@ class Processor {
       if (pipe.processor === this) {
         return pipe;
       }
-      this.pipes[pipe.name as keyof typeof this.pipes] = pipe as Pipe<
-        Context<any>
-      >;
+      this.pipes[pipe.name as keyof typeof this.pipes] = pipe as Pipe<Context<any>>;
     }
     pipe!.processor = this;
     return pipe!;
@@ -54,20 +47,19 @@ class Processor {
   process<TContext extends Context<any>>(
     input: TContext,
     pipe?: Pipe<TContext>,
-  ): TContext['result'] | undefined {
+  ): TContext["result"] | undefined {
     let context = input;
     context.options = this.options();
-    let nextPipe: Pipe<TContext> | string | null =
-      pipe || input.pipe || 'default';
+    let nextPipe: Pipe<TContext> | string | null = pipe || input.pipe || "default";
     let lastPipe;
     while (nextPipe) {
-      if (typeof context.nextAfterChildren !== 'undefined') {
+      if (typeof context.nextAfterChildren !== "undefined") {
         // children processed and coming back to parent
         context.next = context.nextAfterChildren;
         context.nextAfterChildren = null;
       }
 
-      if (typeof nextPipe === 'string') {
+      if (typeof nextPipe === "string") {
         nextPipe = this.pipe(nextPipe) as Pipe<TContext>;
       }
       nextPipe.process(context);

@@ -1,5 +1,5 @@
 // Types
-import type { Context,DiffContext } from './contexts';
+import type { Context, DiffContext } from "./contexts";
 
 export interface Options {
   objectHash?: (item: object, index?: number) => string | undefined;

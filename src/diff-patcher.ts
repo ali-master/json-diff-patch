@@ -1,11 +1,11 @@
-import Pipe from './pipe.js';
-import Processor from './processor.js';
-import { DiffContext, PatchContext } from './contexts';
-import * as trivial from './filters/trivial.filter';
-import * as nested from './filters/nested.filter';
-import * as dates from './filters/dates.filter';
+import Pipe from "./pipe.js";
+import Processor from "./processor.js";
+import { DiffContext, PatchContext } from "./contexts";
+import * as trivial from "./filters/trivial.filter";
+import * as nested from "./filters/nested.filter";
+import * as dates from "./filters/dates.filter";
 // Types
-import type { Delta, Options } from './types';
+import type { Delta, Options } from "./types";
 
 class DiffPatcher {
   processor: Processor;
@@ -13,7 +13,7 @@ class DiffPatcher {
   constructor(options?: Options) {
     this.processor = new Processor(options);
     this.processor.pipe(
-      new Pipe<DiffContext>('diff')
+      new Pipe<DiffContext>("diff")
         .append(
           nested.collectChildrenDiffFilter,
           trivial.diffFilter,
@@ -23,12 +23,8 @@ class DiffPatcher {
         .shouldHaveResult()!,
     );
     this.processor.pipe(
-      new Pipe<PatchContext>('patch')
-        .append(
-          nested.collectChildrenPatchFilter,
-          trivial.patchFilter,
-          nested.patchFilter,
-        )
+      new Pipe<PatchContext>("patch")
+        .append(nested.collectChildrenPatchFilter, trivial.patchFilter, nested.patchFilter)
         .shouldHaveResult()!,
     );
   }

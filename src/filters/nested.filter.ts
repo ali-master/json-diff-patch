@@ -1,6 +1,6 @@
-import { PatchContext, DiffContext } from '../contexts';
+import { PatchContext, DiffContext } from "../contexts";
 // Types
-import type { ArrayDelta, Delta, Filter, ObjectDelta } from '../types';
+import type { ArrayDelta, Delta, Filter, ObjectDelta } from "../types";
 
 export const collectChildrenDiffFilter: Filter<DiffContext> = (context) => {
   if (!context || !context.children) {
@@ -11,21 +11,21 @@ export const collectChildrenDiffFilter: Filter<DiffContext> = (context) => {
   let result = context.result as ObjectDelta | ArrayDelta;
   for (let index = 0; index < length; index++) {
     child = context.children[index];
-    if (typeof child.result === 'undefined') {
+    if (typeof child.result === "undefined") {
       continue;
     }
     result = result || {};
     (result as Record<string | number, Delta>)[child.childName!] = child.result;
   }
   if (result && context.leftIsArray) {
-    result._t = 'a';
+    result._t = "a";
   }
   context.setResult(result).exit();
 };
-collectChildrenDiffFilter.filterName = 'collectChildren';
+collectChildrenDiffFilter.filterName = "collectChildren";
 
 export const objectsDiffFilter: Filter<DiffContext> = (context) => {
-  if (context.leftIsArray || context.leftType !== 'object') {
+  if (context.leftIsArray || context.leftType !== "object") {
     return;
   }
 
@@ -52,7 +52,7 @@ export const objectsDiffFilter: Filter<DiffContext> = (context) => {
     if (propertyFilter && !propertyFilter(name, context)) {
       continue;
     }
-    if (typeof left[name] === 'undefined') {
+    if (typeof left[name] === "undefined") {
       child = new DiffContext(undefined, right[name]);
       context.push(child, name);
     }
@@ -64,11 +64,9 @@ export const objectsDiffFilter: Filter<DiffContext> = (context) => {
   }
   context.exit();
 };
-objectsDiffFilter.filterName = 'objects';
+objectsDiffFilter.filterName = "objects";
 
-export const patchFilter: Filter<PatchContext> = function nestedPatchFilter(
-  context,
-) {
+export const patchFilter: Filter<PatchContext> = function nestedPatchFilter(context) {
   if (!context.nested) {
     return;
   }
@@ -80,40 +78,38 @@ export const patchFilter: Filter<PatchContext> = function nestedPatchFilter(
   let name;
   let child;
   for (name in objectDelta) {
-    child = new PatchContext(
-      (context.left as Record<string, unknown>)[name],
-      objectDelta[name],
-    );
+    child = new PatchContext((context.left as Record<string, unknown>)[name], objectDelta[name]);
     context.push(child, name);
   }
   context.exit();
 };
-patchFilter.filterName = 'objects';
+patchFilter.filterName = "objects";
 
-export const collectChildrenPatchFilter: Filter<PatchContext> =
-  function collectChildrenPatchFilter(context) {
-    if (!context || !context.children) {
-      return;
+export const collectChildrenPatchFilter: Filter<PatchContext> = function collectChildrenPatchFilter(
+  context,
+) {
+  if (!context || !context.children) {
+    return;
+  }
+  const deltaWithChildren = context.delta as ObjectDelta | ArrayDelta;
+  if (deltaWithChildren._t) {
+    return;
+  }
+  const object = context.left as Record<string, unknown>;
+  const length = context.children.length;
+  let child;
+  for (let index = 0; index < length; index++) {
+    child = context.children[index];
+    const property = child.childName as string;
+    if (
+      Object.prototype.hasOwnProperty.call(context.left, property) &&
+      child.result === undefined
+    ) {
+      delete object[property];
+    } else if (object[property] !== child.result) {
+      object[property] = child.result;
     }
-    const deltaWithChildren = context.delta as ObjectDelta | ArrayDelta;
-    if (deltaWithChildren._t) {
-      return;
-    }
-    const object = context.left as Record<string, unknown>;
-    const length = context.children.length;
-    let child;
-    for (let index = 0; index < length; index++) {
-      child = context.children[index];
-      const property = child.childName as string;
-      if (
-        Object.prototype.hasOwnProperty.call(context.left, property) &&
-        child.result === undefined
-      ) {
-        delete object[property];
-      } else if (object[property] !== child.result) {
-        object[property] = child.result;
-      }
-    }
-    context.setResult(object).exit();
-  };
-collectChildrenPatchFilter.filterName = 'collectChildren';
+  }
+  context.setResult(object).exit();
+};
+collectChildrenPatchFilter.filterName = "collectChildren";
